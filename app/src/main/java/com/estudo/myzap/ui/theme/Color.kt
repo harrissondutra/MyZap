@@ -13,3 +13,5 @@ val Pink40 = Color(0xFF7D5260)
 val GreenDefault = Color(0xFF25d366)
 val GreenDark = Color(0xFF006133)
 val GreenShadow = Color(0xFFD0E6BE)
+
+val GrayLight = Color(0xFFC0BEBE)

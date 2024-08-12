@@ -1,14 +1,17 @@
 package com.estudo.myzap
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.outlined.PhotoCamera
@@ -31,12 +34,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.estudo.myzap.model.NavItem
 import com.estudo.myzap.sampledata.itemsNavSample
+import com.estudo.myzap.sampledata.sampleChats
 import com.estudo.myzap.sampledata.sampleMenu
+import com.estudo.myzap.ui.components.ItemChat
 import com.estudo.myzap.ui.components.SearchTextField
 import com.estudo.myzap.ui.theme.GreenDark
 import com.estudo.myzap.ui.theme.GreenDefault
@@ -53,6 +59,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun App() {
@@ -72,11 +79,9 @@ fun App() {
                             color = GreenDefault,
                             fontWeight = FontWeight.Bold,
                             fontSize = 24.sp,
-
                             )
                     },
                     actions = {
-
                         Icon(
                             imageVector = Icons.Outlined.PhotoCamera,
                             contentDescription = "Search",
@@ -160,22 +165,32 @@ fun App() {
                 }
             },
         )
-        { innerPadding ->
-            Column(Modifier.padding(top = 85.dp)) {
-                Row {
-                    SearchTextField(
-                        searchText = "Pesquisar",
-                        onSearchChanged = {}
-                    )
-                }
-            }
+        {
+            Box(modifier = Modifier.padding(top = 85.dp)){
+                val chat = sampleChats
+                val chatSize = sampleChats.size
 
-            Box(modifier = Modifier.padding(innerPadding)) {
-                // Content
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                ) {
+                    item {
+                        SearchTextField(
+                            searchText = "Search",
+                            onSearchChanged = {}
+                        )
+                    }
+                    items(chatSize) { user ->
+                        ItemChat(user = chat[user])
+
+                    }
+
+                }
             }
         }
     }
 }
+
 
 @Preview
 @Composable
