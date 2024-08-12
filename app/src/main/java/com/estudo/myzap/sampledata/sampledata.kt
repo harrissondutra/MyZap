@@ -2,6 +2,8 @@ package com.estudo.myzap.sampledata
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Chat
+import androidx.compose.material.icons.automirrored.outlined.Chat
+import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material.icons.filled.ChatBubble
 import androidx.compose.material.icons.filled.ChatBubbleOutline
 import androidx.compose.material.icons.filled.Groups
@@ -19,7 +21,7 @@ import com.estudo.myzap.model.NavItem
 import com.estudo.myzap.model.User
 
 val itemsNavSample = listOf(
-    NavItem(icon = Icons.Filled.ChatBubbleOutline, blackIcon = Icons.AutoMirrored.Filled.Chat, label = "Conversas"),
+    NavItem(icon = Icons.AutoMirrored.Outlined.Chat, blackIcon = Icons.AutoMirrored.Filled.Chat, label = "Conversas"),
     NavItem(icon = Icons.Filled.Update,  blackIcon = Icons.Default.Update, label = "Atualizações"),
     NavItem(icon = Icons.Outlined.Groups, blackIcon = Icons.Rounded.Groups, label = "Comunidades"),
     NavItem(icon = Icons.Outlined.Phone, blackIcon = Icons.Rounded.Phone, label = "Ligações"),
@@ -38,3 +40,11 @@ val sampleChats = listOf(
     User(10, "Alex", "Oi, tudo bem?", "06:00", image = R.drawable.user_man_5),
     User(11, "Família", "Oi, tudo bem?", "04:00", image = R.drawable.people_1),
 )
+
+val sampleChips = listOf(
+    "Todas",
+    "Não Lidas",
+    "Favoritos",
+    "Grupos",
+)
+

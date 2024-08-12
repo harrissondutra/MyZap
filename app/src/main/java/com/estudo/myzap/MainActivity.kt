@@ -8,10 +8,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.outlined.PhotoCamera
@@ -34,17 +34,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.estudo.myzap.model.NavItem
 import com.estudo.myzap.sampledata.itemsNavSample
 import com.estudo.myzap.sampledata.sampleChats
+import com.estudo.myzap.sampledata.sampleChips
 import com.estudo.myzap.sampledata.sampleMenu
+import com.estudo.myzap.ui.components.Chip
 import com.estudo.myzap.ui.components.ItemChat
 import com.estudo.myzap.ui.components.SearchTextField
-import com.estudo.myzap.ui.theme.GreenDark
+import com.estudo.myzap.ui.theme.GreenDarkIcon
 import com.estudo.myzap.ui.theme.GreenDefault
 import com.estudo.myzap.ui.theme.GreenShadow
 import com.estudo.myzap.ui.theme.MyZapTheme
@@ -79,7 +80,7 @@ fun App() {
                             color = GreenDefault,
                             fontWeight = FontWeight.Bold,
                             fontSize = 24.sp,
-                            )
+                        )
                     },
                     actions = {
                         Icon(
@@ -121,7 +122,7 @@ fun App() {
                 )
             },
             bottomBar = {
-                BottomAppBar {
+                BottomAppBar(Modifier.fillMaxWidth()) {
 
                     var selectedItem by remember {
                         mutableStateOf(navItems.first())
@@ -136,11 +137,16 @@ fun App() {
                             icon = {
                                 if (selectedItem == navItem) {
                                     Icon(
+                                        modifier = Modifier.size(30.dp),
                                         imageVector = navItem.blackIcon,
                                         contentDescription = null
                                     )
                                 } else {
-                                    Icon(imageVector = navItem.icon, contentDescription = null)
+                                    Icon(
+                                        modifier = Modifier.size(30.dp),
+                                        imageVector = navItem.icon,
+                                        contentDescription = null
+                                    )
 
                                 }
                             },
@@ -148,16 +154,19 @@ fun App() {
                                 if (selectedItem == navItem) {
                                     Text(
                                         text = navItem.label,
-                                        fontWeight = FontWeight.Bold
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 14.sp
                                     )
                                 } else {
                                     Text(
                                         text = navItem.label,
+                                        fontWeight = FontWeight.Normal,
+                                        fontSize = 14.sp
                                     )
                                 }
                             },
                             colors = NavigationBarItemDefaults.colors(
-                                selectedIconColor = GreenDark,
+                                selectedIconColor = GreenDarkIcon,
                                 indicatorColor = GreenShadow,
                             )
                         )
@@ -166,9 +175,10 @@ fun App() {
             },
         )
         {
-            Box(modifier = Modifier.padding(top = 85.dp)){
+            Box(modifier = Modifier.padding(top = 85.dp)) {
                 val chat = sampleChats
                 val chatSize = sampleChats.size
+                val chips = sampleChips
 
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
@@ -180,6 +190,13 @@ fun App() {
                             onSearchChanged = {}
                         )
                     }
+                  /*  items(chips.size) { index ->
+                        Chip(
+                            label = chips[index],
+                            isSelected = index == 0,
+                            onClick = {}
+                        )
+                    }*/
                     items(chatSize) { user ->
                         ItemChat(user = chat[user])
 
@@ -192,10 +209,10 @@ fun App() {
 }
 
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun AppPreview() {
-    MyZapTheme {
+    MyZapTheme(darkTheme = true, dynamicColor = false) {
         App()
     }
 }

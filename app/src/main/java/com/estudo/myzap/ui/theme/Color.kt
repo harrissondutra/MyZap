@@ -10,8 +10,12 @@ val Purple40 = Color(0xFF6650a4)
 val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
-val GreenDefault = Color(0xFF25d366)
 val GreenDark = Color(0xFF006133)
-val GreenShadow = Color(0xFFD0E6BE)
+val GreenDarkBackground = Color(0xFF0B141B)
+
+val GreenDefault = Color(0xFF25d366)
+
+val GreenDarkIcon = Color(0xFFD8FFD2)
+val GreenShadow = Color(0xFF103629)
 
 val GrayLight = Color(0xFFC0BEBE)
