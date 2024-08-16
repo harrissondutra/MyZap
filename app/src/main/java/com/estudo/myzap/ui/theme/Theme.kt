@@ -14,18 +14,22 @@ import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
     primary = GreenDefault,
-    secondary = GreenDark,
-    tertiary = GreenDark ,
+    secondary = Color.White,
+    tertiary = GreenShadow ,
     background = GreenDarkBackground,
     surface = GreenDarkBackground,
     onSurface = Color.White, //Texto Surface
-    onBackground = Color.White, //Texto
+    onBackground = Message, //Texto
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = GreenDefault,
-    secondary = GreenDefault,
-    tertiary = GreenDark
+    primary =Color.White,
+    onPrimary = Color.Blue,
+    secondary = GreenDark,
+    tertiary = GreenBackgroundItem,
+    surface = Color.White,
+    onSurface = Color.Black,
+    onBackground = MessageWhite,
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -42,7 +46,7 @@ private val LightColorScheme = lightColorScheme(
 fun MyZapTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colors = if (!darkTheme) {

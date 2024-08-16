@@ -1,17 +1,16 @@
 package com.estudo.myzap
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.outlined.PhotoCamera
@@ -21,12 +20,14 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,13 +39,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.estudo.myzap.model.NavItem
-import com.estudo.myzap.sampledata.itemsNavSample
-import com.estudo.myzap.sampledata.sampleChats
-import com.estudo.myzap.sampledata.sampleChips
 import com.estudo.myzap.sampledata.sampleMenu
-import com.estudo.myzap.ui.components.Chip
-import com.estudo.myzap.ui.components.ItemChat
-import com.estudo.myzap.ui.components.SearchTextField
+import com.estudo.myzap.ui.screens.AtualizacoesScreen
+import com.estudo.myzap.ui.screens.ChatScreen
+import com.estudo.myzap.ui.screens.ComunidadesScreen
+import com.estudo.myzap.ui.screens.LigacoesScreen
 import com.estudo.myzap.ui.theme.GreenDarkIcon
 import com.estudo.myzap.ui.theme.GreenDefault
 import com.estudo.myzap.ui.theme.GreenShadow
@@ -60,15 +59,37 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun App() {
-    val navItems: List<NavItem> = itemsNavSample
+    val items = remember {
+        listOf(
+            NavItem.Conversas,
+            NavItem.Atualizacoes,
+            NavItem.Comunidades,
+            NavItem.Ligacoes
+        )
+    }
     var expanded by remember {
         mutableStateOf(false)
     }
+    val pagerState = rememberPagerState {
+        items.size
+    }
     val menuItems = sampleMenu
+
+    var selectedItem by remember {
+        mutableStateOf(items.first())
+    }
+
+    LaunchedEffect(selectedItem) {
+        pagerState.animateScrollToPage(items.indexOf(selectedItem))
+    }
+    LaunchedEffect (pagerState.targetPage) {
+        selectedItem = items[pagerState.targetPage]
+
+    }
+
     MyZapTheme {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
@@ -123,12 +144,7 @@ fun App() {
             },
             bottomBar = {
                 BottomAppBar(Modifier.fillMaxWidth()) {
-
-                    var selectedItem by remember {
-                        mutableStateOf(navItems.first())
-                    }
-
-                    navItems.forEach { navItem ->
+                    items.forEach { navItem ->
                         NavigationBarItem(
                             selected = navItem == selectedItem,
                             onClick = {
@@ -166,43 +182,27 @@ fun App() {
                                 }
                             },
                             colors = NavigationBarItemDefaults.colors(
-                                selectedIconColor = GreenDarkIcon,
-                                indicatorColor = GreenShadow,
+                                selectedIconColor = MaterialTheme.colorScheme.secondary,
+                                indicatorColor = MaterialTheme.colorScheme.tertiary,
                             )
                         )
                     }
                 }
             },
         )
-        {
-            Box(modifier = Modifier.padding(top = 85.dp)) {
-                val chat = sampleChats
-                val chatSize = sampleChats.size
-                val chips = sampleChips
-
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.spacedBy(4.dp),
-                ) {
-                    item {
-                        SearchTextField(
-                            searchText = "Search",
-                            onSearchChanged = {}
-                        )
-                    }
-                  /*  items(chips.size) { index ->
-                        Chip(
-                            label = chips[index],
-                            isSelected = index == 0,
-                            onClick = {}
-                        )
-                    }*/
-                    items(chatSize) { user ->
-                        ItemChat(user = chat[user])
-
-                    }
-
+        { innerPadding ->
+            HorizontalPager(
+                state = pagerState,
+                modifier = Modifier.padding(innerPadding)
+            ) { page ->
+                val item = items[page]
+                when (item) {
+                    NavItem.Conversas -> ChatScreen()
+                    NavItem.Atualizacoes -> AtualizacoesScreen()
+                    NavItem.Comunidades -> ComunidadesScreen()
+                    NavItem.Ligacoes -> LigacoesScreen()
                 }
+
             }
         }
     }

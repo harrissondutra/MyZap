@@ -13,9 +13,12 @@ val Pink40 = Color(0xFF7D5260)
 val GreenDark = Color(0xFF006133)
 val GreenDarkBackground = Color(0xFF0B141B)
 
-val GreenDefault = Color(0xFF25d366)
 
 val GreenDarkIcon = Color(0xFFD8FFD2)
 val GreenShadow = Color(0xFF103629)
 
+val GreenDefault = Color(0xFF25d366)
+val GreenBackgroundItem = Color(0xFFD8FFD2)
 val GrayLight = Color(0xFFC0BEBE)
+val Message = Color(0xFF848D94)
+val MessageWhite = Color(0xFF636363)

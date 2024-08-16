@@ -20,12 +20,6 @@ import com.estudo.myzap.R
 import com.estudo.myzap.model.NavItem
 import com.estudo.myzap.model.User
 
-val itemsNavSample = listOf(
-    NavItem(icon = Icons.AutoMirrored.Outlined.Chat, blackIcon = Icons.AutoMirrored.Filled.Chat, label = "Conversas"),
-    NavItem(icon = Icons.Filled.Update,  blackIcon = Icons.Default.Update, label = "Atualizações"),
-    NavItem(icon = Icons.Outlined.Groups, blackIcon = Icons.Rounded.Groups, label = "Comunidades"),
-    NavItem(icon = Icons.Outlined.Phone, blackIcon = Icons.Rounded.Phone, label = "Ligações"),
-)
 
 val sampleChats = listOf(
     User(1, "João", "Oi, tudo bem?", "10:00", image = R.drawable.user),
